@@ -1,30 +1,18 @@
-
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
 library(shiny)
 
+# Rely on the 'WorldPhones' dataset in the datasets
+# package (which generally comes preloaded).
+
+# Define the overall UI
 shinyUI(fluidPage(
-
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
+  titlePanel("Reactivity"),
+  sidebarLayout(      
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-    ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
-    )
+      selectInput("value" , "Variable:",choices = names_list),
+      selectInput("output", "Output:"  ,choices = c("MaxPlot","MinPlot")),
+      hr(),
+      helpText("XXX")
+    ),    
+    mainPanel(plotOutput("Plot"))
   )
 ))

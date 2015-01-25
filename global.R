@@ -24,33 +24,17 @@ DF$datetime <- as.character(strptime(date_time_str,format = "%Y%m%d%H%M%S"))
 DF$date <- as.Date(DF$datetime)
 DF$time <- paste0(strftime(DF$datetime,"%H"),":",str_pad(as.character(floor(as.numeric(strftime(DF$datetime,"%M"))/5)*5),2,pad="0"))
 
-names_list <- c("OPEN","HIGH","LOW","CLOSE","VOLUME","MONEY")
-
-require(dplyr)
-
-## 計算每日最高價
-
+names_list <<- c("OPEN","HIGH","LOW","CLOSE","VOLUME","MONEY")
+DF <<- DF
 ## NSE 問題~ ##
-# http://stackoverflow.com/questions/27197617/filter-data-frame-by-character-column-name-in-dplyr
-# http://cran.r-project.org/web/packages/dplyr/vignettes/nse.html
-#install.packages("lazyeval")
-require(lazyeval)
-expr <- interp(quote(ff == max(ff)),ff=as.name(names_list[1]))
-result <- DF %>%
-  group_by(date) %>%
-  filter( expr) %>%
-  select(date,time,OPEN,HIGH,LOW,CLOSE,VOLUME)
-
-result
-require(ggplot2)
-expr_ <- interp(quote(f),f=as.name(names_list[1]))
-p <- ggplot(data=result,aes(x=time))
-## stat="identity" 直接告訴數值,"bin" table結果
-p + geom_bar(stat="bin") + coord_flip()+ggtitle(names_list[1])
-
-## 
+#http://stackoverflow.com/questions/27197617/filter-data-frame-by-character-column-name-in-dplyr
+#http://cran.r-project.org/web/packages/dplyr/vignettes/nse.html
+# install.packages("lazyeval")
+# expr <- interp(quote(ff == max(ff)),ff=as.name(input$value))
+# result <- DF %>%
+#   group_by(date) %>%
+#   filter( expr) %>%
+#   select(date,time,OPEN,HIGH,LOW,CLOSE,VOLUME)
 
 
-
-#
 #seq(range(date_time)[1],range(date_time)[2],by="5 min")
